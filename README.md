@@ -12,6 +12,10 @@
 
 仕様: https://cs-sysdes.github.io/todolist.html
 
+### Local Environment
+
+macOS 13.0.1 (arm64)
+
 ## Environments
 
 - Go Gin
