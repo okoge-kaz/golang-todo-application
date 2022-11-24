@@ -41,7 +41,7 @@ func CreateUser(ctx *gin.Context) {
 
 func ShowUser(ctx *gin.Context) {
 	// get user
-	userID, err := strconv.Atoi(ctx.Param("id"))
+	userID, err := helpers.GetIDFromQueryParameter(ctx)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request (invalid user id)")
 		return
