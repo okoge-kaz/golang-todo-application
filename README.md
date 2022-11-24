@@ -12,6 +12,14 @@
 
 仕様: https://cs-sysdes.github.io/todolist.html
 
+## Development Flow
+
+1. フロントエンドとはつなぎこまず、JSON を返す API を作成する
+2. フロントエンド実装
+3. フロントエンドと API をつなぎこむ
+4. テストを書く (余裕があれば)
+5. レポート作成
+
 ### Local Environment
 
 macOS 13.0.1 (arm64)
