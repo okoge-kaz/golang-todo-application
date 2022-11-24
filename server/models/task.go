@@ -1,13 +1,20 @@
 package models
 
 import (
+	"github.com/okoge-kaz/golang-todo-application/server/db"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
 	"gorm.io/gorm"
 )
 
-func GetTask(db *gorm.DB, id int) (entities.Task, error) {
+func GetTask(taskID int) (entities.Task, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return entities.Task{}, err
+	}
+
 	var task entities.Task
-	err := db.First(&task, id).Error
+	err = db.First(&task, taskID).Error
 	return task, err
 }
 
