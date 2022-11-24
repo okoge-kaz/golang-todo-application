@@ -2,13 +2,17 @@
 
 ## Description
 
+東京工業大学 情報理工学院 情報工学系 システム設計演習 (2022 3Q)
+
+講義ページ: https://cs-sysdes.github.io/lecture-note/index.html
+
+評価方法: https://cs-sysdes.github.io/about.html
+
+レポート課題: https://cs-sysdes.github.io/report.html
+
+仕様: https://cs-sysdes.github.io/todolist.html
+
 ## Environments
-
-### Docker
-
-開発環境なため Docker イメージのサイズなどは考えず、binary ファイルだけをコピーする形としていない。
-
-またホットリロードがされるように、Air を導入している。しかし、Production 環境には適さないため、デプロイ前に修正する必要あり
 
 ## How to setup
 
