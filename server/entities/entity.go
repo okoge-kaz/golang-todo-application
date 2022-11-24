@@ -24,8 +24,8 @@ type User struct {
 
 type Ownership struct {
 	gorm.Model
-	UserID User `gorm:"foreignKey:UserID"` // ownerships.user_id
-	TaskID Task `gorm:"foreignKey:TaskID"` // ownerships.task_id
+	UserID User `gorm:"foreignKey:UserID"` // ownerships.user_id // belongs to user (many to one) (many ownerships can belong to one user)
+	TaskID Task `gorm:"foreignKey:TaskID"` // ownerships.task_id // has one task (one to one) (one ownership has one task)
 }
 
 type Category struct {
