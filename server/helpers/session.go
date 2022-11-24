@@ -34,3 +34,16 @@ func SetUserID(ctx *gin.Context, userID int) error {
 	}
 	return nil // logged in(正常にログインできた)
 }
+
+func DeleteUserID(ctx *gin.Context) error {
+	sessions.Default(ctx).Delete(sessionKey)
+	err := sessions.Default(ctx).Save()
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, "Internal Server Error")
+		return err // can't save session (正常にログアウトできなかった)
+	}
+	sessions.Default(ctx).Clear()
+	sessions.Default(ctx).Options(sessions.Options{MaxAge: -1})
+	sessions.Default(ctx).Save()
+	return nil // logged out(正常にログアウトできた)
+}
