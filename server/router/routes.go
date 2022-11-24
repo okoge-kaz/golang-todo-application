@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/okoge-kaz/golang-todo-application/server/controllers"
+	"github.com/okoge-kaz/golang-todo-application/server/controllers/auth"
 	"github.com/okoge-kaz/golang-todo-application/server/helpers"
 )
 
@@ -26,7 +27,7 @@ func Init() *gin.Engine {
 	// task
 	router.GET("/task", controllers.ShowTasks)
 	task := router.Group("/task")
-	// taskGroup.Use(service.LoginCheck) // login check
+	task.Use(auth.LoginCheck)
 	{
 		// create
 		task.POST("/new", controllers.CreateTask)
@@ -36,7 +37,7 @@ func Init() *gin.Engine {
 
 		// update
 		taskUpdate := task.Group("/:id/")
-		// taskUpdate.Use(service.TaskOwnerCheck) // task owner check ユーザーとの紐付け
+		taskUpdate.Use(auth.TaskOwnerCheck) // task owner check
 		{
 			// edit
 			taskUpdate.POST("edit", controllers.UpdateTask)
