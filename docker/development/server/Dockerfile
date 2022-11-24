@@ -1,9 +1,16 @@
 FROM golang:1.19
 
-WORKDIR /go/server
+WORKDIR /app/server
 COPY ./server .
+
+# wait-for-it.sh is a script that waits for a service to be available
+# before starting the server. This is useful for when the database
+# container is started before the server container.
+COPY ./docker/development/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 RUN go mod download
 RUN go mod tidy
 
-CMD ["air", "-c", "server/.air.toml"]
+RUN go get -u github.com/cosmtrek/air && \
+  go build -o /go/bin/air github.com/cosmtrek/air
