@@ -119,3 +119,44 @@ macOS 13.0.1 (arm64)
     ├── tsconfig.json
     └── yarn.lock
 ```
+
+## References
+
+### Go + Next.js
+
+- Next.js + Go でクイズアプリを作ってみる: https://qiita.com/kmnky/items/614a22d6724a85dee0da#api%E3%81%A8%E3%81%AE%E7%B9%8B%E3%81%8E%E8%BE%BC%E3%81%BF
+
+- Go 言語と Vue.js で作るユーザー認証アプリ: https://selfnote.work/20210204/programming/create-authentication-app-with-golang-and-vue3-4/
+
+### Gin REST API
+
+- Go Gin で REST API を作ってみる: https://zenn.dev/a_ichi1/articles/67b51de22475f9#docker-compose.yml
+
+### Gin + MySQL
+
+- go-gin, mysql (migration): https://qiita.com/greenteabiscuit/items/282ae184b3aad7edf92f#%E3%83%9E%E3%82%A4%E3%82%B0%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEsql%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB
+
+### Go + Air
+
+- Docker コンテナで golang をホットリロードする Air を導入: https://zenn.dev/ajapa/articles/bc399c7e4c0def
+
+### wait for DB start
+
+- wait-for-it: https://github.com/vishnubob/wait-for-it
+- Go Docker DB に connection refused されたときの対処法: https://zenn.dev/yoji/articles/5386d040587f83
+
+### SQL Formatter
+
+- vscode で SQL をフォーマットしたい: https://qiita.com/Daara_y/items/6c1ddfa141d38a22e58d
+
+### TablePlus
+
+- TablePlus で MySQL に接続する: https://reffect.co.jp/windows/tableplus-connect-mysql-sqlite#:~:text=MySQL%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%B8%E3%81%AE%E6%8E%A5%E7%B6%9A,-MySQL%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%B8&text=TablePlus%E3%81%AE%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E8%B5%B7%E5%8B%95,%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%82%92%E8%A1%8C%E3%81%84%E3%81%BE%E3%81%99%E3%80%82&text=open_tableplus-,%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B%E3%81%A8%E3%81%95%E3%82%89%E3%81%AB%E9%81%B8%E6%8A%9E%E7%94%BB%E9%9D%A2%E3%81%8C%E8%A1%A8%E7%A4%BA,%E3%82%92%E9%81%B8%E6%8A%9E%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82&text=MySQL%E3%82%92%E9%81%B8%E6%8A%9E%E3%81%97%E3%81%A6Create%E3%83%9C%E3%82%BF%E3%83%B3%E3%82%92%E6%8A%BC%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82
+
+### ECS
+
+- AWS ECS で自動デプロイを組んでみる: https://zenn.dev/ttani/articles/aws-ecs-autodeploy
+
+### Auth
+
+- Auth0×Golang で認証認可の処理を実施する: https://qiita.com/kouji0705/items/a8790ff4e72574f9c5f1
