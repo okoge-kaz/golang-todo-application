@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/okoge-kaz/golang-todo-application/server/db"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
+	"github.com/okoge-kaz/golang-todo-application/server/helpers"
 )
 
 func GetUserByID(userID int) (entities.User, error) {
