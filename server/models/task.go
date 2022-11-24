@@ -66,8 +66,14 @@ func GetTasksByUserIDAndStatusAndKeyword(userID int, status []string, keywords [
 	}
 }
 
-func CreateTask(db *gorm.DB, task *entities.Task) error {
-	err := db.Create(task).Error
+func CreateTask(task *entities.Task) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Create(task).Error
 	return err
 }
 
