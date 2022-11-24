@@ -48,7 +48,7 @@ func Init() *gin.Engine {
 
 	// user
 	// new registration
-	router.POST("/user/new", controllers.NotImplemented)
+	router.POST("/user/new", controllers.CreateUser)
 
 	user := router.Group("/user")
 	// user.Use(service.LoginCheck) // login check
