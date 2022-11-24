@@ -14,6 +14,38 @@
 
 ## Environments
 
+- Go Gin
+
+  ドキュメント(日本語): https://gin-gonic.com/ja/docs/examples/
+
+- Air: https://github.com/cosmtrek/air
+
+  本プロジェクトでは、本番環境へのデプロイを想定していないため、開発体験を向上させる目的から、Air を使用している。
+
+- wait-for-it:
+
+  GitHub: https://github.com/vishnubob/wait-for-it
+
+  docker-compose.yaml にて、DB が起動するまで待機するために使用している。
+
+  具体的には、以下の部分である。
+
+  ```yaml
+  depends_on:
+    - db
+  command:
+    - wait-for-it.sh
+    - db:3306
+    - --timeout=60
+    - --strict
+    - --
+    - air
+    - -c
+    - .air.toml
+  ```
+
+  MySQL の起動を待ってから、Air を起動するようにしている。
+
 ## How to setup
 
 `docker-compose up -d`を行うだけでよい。
