@@ -42,11 +42,10 @@ func Init() *gin.Engine {
 		// taskUpdate.Use(service.TaskOwnerCheck) // task owner check ユーザーとの紐付け
 		{
 			// edit
-			taskUpdate.GET("edit", controllers.NotImplemented)
-			taskUpdate.POST("edit", controllers.NotImplemented)
+			taskUpdate.POST("edit", controllers.UpdateTask)
 
 			// delete
-			taskUpdate.POST("delete", controllers.NotImplemented)
+			taskUpdate.POST("delete", controllers.DeleteTask)
 		}
 	}
 
