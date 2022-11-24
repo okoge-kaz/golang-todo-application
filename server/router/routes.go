@@ -63,7 +63,7 @@ func Init() *gin.Engine {
 		user.POST("/change_name", controllers.ChangeUserName)
 
 		// delete
-		user.POST("/delete", controllers.NotImplemented)
+		user.POST("/delete", controllers.DeleteUser)
 	}
 
 	// category
