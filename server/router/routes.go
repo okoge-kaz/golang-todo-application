@@ -53,8 +53,8 @@ func Init() *gin.Engine {
 	user := router.Group("/user")
 	// user.Use(service.LoginCheck) // login check
 	{
-		// read
-		user.GET("/info", controllers.NotImplemented)
+		// read (user information)
+		user.GET("/info", controllers.ShowUser)
 
 		// change password
 		user.POST("/change_password", controllers.NotImplemented)

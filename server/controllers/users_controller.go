@@ -41,13 +41,9 @@ func CreateUser(ctx *gin.Context) {
 
 func ShowUser(ctx *gin.Context) {
 	// get user
-	userID, err := helpers.GetIDFromQueryParameter(ctx)
-	if err != nil {
-		ctx.String(http.StatusBadRequest, "Bad Request (invalid user id)")
-		return
-	}
+	userID := helpers.GetUserID(ctx)
 
-	user, err := models.GetUser(userID)
+	user, err := models.GetUserByID(userID)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusNotFound)
 		return
