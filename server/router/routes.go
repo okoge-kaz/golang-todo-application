@@ -6,10 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-
 	"github.com/okoge-kaz/golang-todo-application/server/controllers"
+	"github.com/okoge-kaz/golang-todo-application/server/helpers"
 )
 
 // Init initializes the router
@@ -18,8 +16,7 @@ func Init() *gin.Engine {
 	router := gin.Default()
 
 	// initialize session
-	store := cookie.NewStore([]byte("secret"))
-	router.Use(sessions.Sessions("mysession", store))
+	helpers.SetSession(router)
 
 	// routing
 	router.GET("/", func(c *gin.Context) {
