@@ -18,10 +18,23 @@ func GetTask(taskID int) (entities.Task, error) {
 	return task, err
 }
 
-func GetTasks(db *gorm.DB, ids []int) ([]entities.Task, error) {
+func GetTasksByUserID(userID int, order string) ([]entities.Task, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return nil, err
+	}
+
 	var tasks []entities.Task
-	err := db.Find(&tasks, ids).Error
-	return tasks, err
+
+	switch order {
+	case "desc":
+		err := db.Joins("JOIN ownerships ON ownerships.task_id = tasks.id").Where("ownerships.user_id = ?", userID).Order("deadline desc").Find(&tasks).Error
+		return tasks, err
+	default:
+		err := db.Joins("JOIN ownerships ON ownerships.task_id = tasks.id").Where("ownerships.user_id = ?", userID).Order("deadline asc").Find(&tasks).Error
+		return tasks, err
+	}
 }
 
 func GetAllTasks(db *gorm.DB) ([]entities.Task, error) {
