@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
+	"github.com/okoge-kaz/golang-todo-application/server/helpers"
 	"github.com/okoge-kaz/golang-todo-application/server/models"
 )
 
@@ -32,9 +32,8 @@ func ShowTask(ctx *gin.Context) {
 }
 
 func ShowTasks(ctx *gin.Context) {
-	// ここは helper に飛ばす
-	const sessionKey string = "user_id" // key もどこかに一元化
-	userID := sessions.Default(ctx).Get(sessionKey).(int)
+	// get user_id from session
+	userID := helpers.GetUserID(ctx)
 
 	// query parameter
 	keywords := strings.Split(ctx.Query("keywords"), " ") // "keyword1 keyword2 keyword3" -> ["keyword1", "keyword2", "keyword3"]
@@ -77,9 +76,8 @@ func ShowTasks(ctx *gin.Context) {
 }
 
 func CreateTask(ctx *gin.Context) {
-	// get user id
-	const sessionKey string = "user_id"
-	userID := sessions.Default(ctx).Get(sessionKey).(int)
+	// get user_id from session
+	userID := helpers.GetUserID(ctx)
 
 	var user entities.User
 	var err error
