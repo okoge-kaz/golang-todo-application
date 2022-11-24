@@ -3,22 +3,22 @@ package db
 import (
 	"errors"
 	"fmt"
-	"log"
 
-	_ "github.com/go-sql-driver/mysql" // initialize mysql driver
-	"github.com/jmoiron/sqlx"
+	"github.com/okoge-kaz/golang-todo-application/server/entities"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var _db *sqlx.DB
+var _db *gorm.DB
 
 // DefaultDSN creates default DSN string
 func defaultDSN(host, port, user, password, dbName string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Asia%%2FTokyo", user, password, host, port, dbName)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=Asia%%2FTokyo", user, password, host, port, dbName)
 }
 
 // connect to database
-func connect(dsn string) (*sqlx.DB, error) {
-	conn, err := sqlx.Connect("mysql", dsn)
+func connect(dsn string) (*gorm.DB, error) {
+	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
@@ -33,32 +33,31 @@ func Init(host, port, user, password, dbName string) error {
 	// connect to database
 	conn, err := connect(dsn)
 	if err != nil {
-		log.Fatal(err)
-	}
-
-	// check connection
-	err = conn.Ping()
-	if err != nil {
-		return err
+		panic("failed to connect database")
 	}
 
 	// bind database connection
 	_db = conn
 
+	// auto migration
+	autoMigrate(_db)
+
 	return nil
 }
 
-// Disconnect closes connection
-func Disconnect() {
-	if _db != nil {
-		_db.Close()
-	}
-}
-
 // GetConnection returns DB connection
-func GetConnection() (*sqlx.DB, error) {
+func GetConnection() (*gorm.DB, error) {
 	if _db != nil {
 		return _db, nil
 	}
 	return nil, errors.New("connection is not established")
+}
+
+// for migration
+func autoMigrate(_db *gorm.DB) {
+	// migration tables
+	_db.AutoMigrate(&entities.Task{})
+	_db.AutoMigrate(&entities.User{})
+	_db.AutoMigrate(&entities.Ownership{})
+	_db.AutoMigrate(&entities.Category{})
 }
