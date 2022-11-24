@@ -1,44 +1,75 @@
 package models
 
 import (
+	"github.com/okoge-kaz/golang-todo-application/server/db"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
-	"gorm.io/gorm"
 )
 
-func GetUser(db *gorm.DB, id int) (entities.User, error) {
+func GetUserByID(userID int) (entities.User, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return entities.User{}, err
+	}
+
 	var user entities.User
-	err := db.First(&user, id).Error
+	err = db.First(&user, userID).Error
 	return user, err
 }
 
-func GetUsers(db *gorm.DB, ids []int) ([]entities.User, error) {
+func GetUsers(ids []int) ([]entities.User, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return nil, err
+	}
+
 	var users []entities.User
-	err := db.Find(&users, ids).Error
+	err = db.Find(&users, ids).Error
 	return users, err
 }
 
-func GetAllUsers(db *gorm.DB) ([]entities.User, error) {
+func GetAllUsers() ([]entities.User, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return nil, err
+	}
+
 	var users []entities.User
-	err := db.Find(&users).Error
+	err = db.Find(&users).Error
 	return users, err
 }
 
-func CreateUser(db *gorm.DB, user *entities.User) error {
-	err := db.Create(user).Error
+func CreateUser(user *entities.User) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Create(user).Error
 	return err
 }
 
-func UpdateUser(db *gorm.DB, user *entities.User) error {
-	err := db.Save(user).Error
+func UpdateUser(user *entities.User) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Save(user).Error
 	return err
 }
 
-func DeleteUser(db *gorm.DB, id int) error {
-	err := db.Delete(&entities.User{}, id).Error
-	return err
-}
+func DeleteUser(user *entities.User) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
 
-func DeleteUsers(db *gorm.DB, ids []int) error {
-	err := db.Delete(&entities.User{}, ids).Error
+	err = db.Delete(user).Error
 	return err
 }
