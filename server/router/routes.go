@@ -66,6 +66,16 @@ func Init() *gin.Engine {
 		user.POST("/delete", controllers.NotImplemented)
 	}
 
+	// category
+	router.GET("/category", controllers.NotImplemented)
+	category := router.Group("/category")
+	{
+		// create
+		category.POST("/new", controllers.NotImplemented)
+		// delete
+		category.POST("/:id/delete", controllers.NotImplemented)
+	}
+
 	// login & logout
 	router.POST("/login", controllers.NotImplemented)
 	router.POST("/logout", controllers.NotImplemented)
