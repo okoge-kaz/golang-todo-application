@@ -15,6 +15,7 @@ func GetUserByID(userID int) (entities.User, error) {
 
 	var user entities.User
 	err = db.First(&user, userID).Error
+	// SELECT * FROM users WHERE id = userID;
 	return user, err
 }
 
@@ -27,6 +28,7 @@ func GetUsers(ids []int) ([]entities.User, error) {
 
 	var users []entities.User
 	err = db.Find(&users, ids).Error
+	// SELECT * FROM users WHERE id IN (ids);
 	return users, err
 }
 
@@ -39,6 +41,7 @@ func GetAllUsers() ([]entities.User, error) {
 
 	var users []entities.User
 	err = db.Find(&users).Error
+	// SELECT * FROM users;
 	return users, err
 }
 
@@ -50,6 +53,7 @@ func CreateUser(user *entities.User) error {
 	}
 
 	err = db.Create(user).Error
+	// INSERT INTO users (name, user_name, password) VALUES (user.Name, user.UserName, user.Password);
 	return err
 }
 
@@ -75,6 +79,7 @@ func UpdateUser(user *entities.User) error {
 	}
 
 	err = db.Save(user).Error
+	// UPDATE users SET name = user.Name, password = user.Password WHERE id = user.ID;
 	return err
 }
 
@@ -87,6 +92,7 @@ func ChangeUserPassword(user *entities.User, password string) error {
 
 	user.Password = helpers.EncryptPassword(password)
 	err = db.Save(user).Error
+	// UPDATE users SET password = password WHERE id = user.ID;
 	return err
 }
 
@@ -99,6 +105,7 @@ func ChangeUserName(user *entities.User, userName string) error {
 
 	user.Name = userName
 	err = db.Save(user).Error
+	// UPDATE users SET name = userName WHERE id = user.ID;
 	return err
 }
 
@@ -110,5 +117,6 @@ func DeleteUser(user *entities.User) error {
 	}
 
 	err = db.Delete(user).Error
+	// DELETE FROM users WHERE id = user.ID;
 	return err
 }
