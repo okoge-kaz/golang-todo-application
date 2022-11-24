@@ -48,7 +48,6 @@ func Init() *gin.Engine {
 
 	// user
 	// new registration
-	router.GET("/user/new", controllers.NotImplemented)
 	router.POST("/user/new", controllers.NotImplemented)
 
 	user := router.Group("/user")
@@ -58,11 +57,9 @@ func Init() *gin.Engine {
 		user.GET("/info", controllers.NotImplemented)
 
 		// change password
-		user.GET("/change_password", controllers.NotImplemented)
 		user.POST("/change_password", controllers.NotImplemented)
 
 		// change user name
-		user.GET("/change_name", controllers.NotImplemented)
 		user.POST("/change_name", controllers.NotImplemented)
 
 		// delete
@@ -70,7 +67,6 @@ func Init() *gin.Engine {
 	}
 
 	// login & logout
-	router.GET("/login", controllers.NotImplemented)
 	router.POST("/login", controllers.NotImplemented)
 	router.POST("/logout", controllers.NotImplemented)
 
