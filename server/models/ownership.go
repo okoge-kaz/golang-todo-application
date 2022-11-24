@@ -1,44 +1,56 @@
 package models
 
 import (
+	"github.com/okoge-kaz/golang-todo-application/server/db"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
-	"gorm.io/gorm"
 )
 
-func GetOwnership(db *gorm.DB, id int) (entities.Ownership, error) {
+func GetOwnership(userID int, taskID int) (entities.Ownership, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return entities.Ownership{}, err
+	}
+
 	var ownership entities.Ownership
-	err := db.First(&ownership, id).Error
+	err = db.Where("user_id = ? AND task_id = ?", userID, taskID).First(&ownership).Error
 	return ownership, err
 }
 
-func GetOwnerships(db *gorm.DB, ids []int) ([]entities.Ownership, error) {
-	var ownerships []entities.Ownership
-	err := db.Find(&ownerships, ids).Error
-	return ownerships, err
-}
+func CreateOwnership(user entities.User, task entities.Task) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
 
-func GetAllOwnerships(db *gorm.DB) ([]entities.Ownership, error) {
-	var ownerships []entities.Ownership
-	err := db.Find(&ownerships).Error
-	return ownerships, err
-}
+	ownership := entities.Ownership{
+		UserID: user,
+		TaskID: task,
+	}
 
-func CreateOwnership(db *gorm.DB, ownership *entities.Ownership) error {
-	err := db.Create(ownership).Error
+	err = db.Create(&ownership).Error
 	return err
 }
 
-func UpdateOwnership(db *gorm.DB, ownership *entities.Ownership) error {
-	err := db.Save(ownership).Error
+func UpdateOwnership(ownership *entities.Ownership) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Save(ownership).Error
 	return err
 }
 
-func DeleteOwnership(db *gorm.DB, id int) error {
-	err := db.Delete(&entities.Ownership{}, id).Error
-	return err
-}
+func DeleteOwnership(ownership *entities.Ownership) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
 
-func DeleteOwnerships(db *gorm.DB, ids []int) error {
-	err := db.Delete(&entities.Ownership{}, ids).Error
+	err = db.Delete(ownership).Error
 	return err
 }
