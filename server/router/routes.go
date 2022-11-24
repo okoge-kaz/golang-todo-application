@@ -52,7 +52,7 @@ func Init() *gin.Engine {
 	router.POST("/user/new", controllers.CreateUser)
 
 	user := router.Group("/user")
-	// user.Use(service.LoginCheck) // login check
+	user.Use(auth.LoginCheck)
 	{
 		// read (user information)
 		user.GET("/info", controllers.ShowUser)
@@ -70,6 +70,7 @@ func Init() *gin.Engine {
 	// category
 	router.GET("/category", controllers.NotImplemented)
 	category := router.Group("/category")
+	category.Use(auth.LoginCheck)
 	{
 		// create
 		category.POST("/new", controllers.NotImplemented)
