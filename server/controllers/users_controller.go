@@ -56,24 +56,31 @@ func ShowUser(ctx *gin.Context) {
 }
 
 func ChangeUserPassword(ctx *gin.Context) {
-	// get user
+	// get user_id
 	userID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request (invalid user id)")
 		return
 	}
 
-	var user entities.User
-	err = ctx.BindJSON(&user)
-	if err != nil {
-		ctx.String(http.StatusBadRequest, "Bad Request (invalid user)")
-		return
-	}
+	// get user
+	user, err := models.GetUserByID(userID)
 
-	// change password
-	err = models.ChangeUserPassword(userID, user.Password)
-	if err != nil {
-		ctx.String(http.StatusInternalServerError, "Internal Server Error")
+	// get password
+	password := ctx.PostForm("password")
+	newPassword := ctx.PostForm("new_password")
+
+	// check password
+	switch helpers.CheckPasswordHash(user, password) {
+	case true:
+		// change password
+		err = models.ChangeUserPassword(&user, newPassword)
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, "Internal Server Error")
+			return
+		}
+	default:
+		ctx.String(http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
