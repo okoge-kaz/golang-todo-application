@@ -106,6 +106,10 @@ func ChangeUserName(ctx *gin.Context) {
 
 	// get user
 	user, err := models.GetUserByID(userID)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	}
 
 	// get new user name
 	newUserName := ctx.PostForm("new_user_name")
@@ -122,15 +126,22 @@ func ChangeUserName(ctx *gin.Context) {
 }
 
 func DeleteUser(ctx *gin.Context) {
-	// get user
+	// get user_id
 	userID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request (invalid user id)")
 		return
 	}
 
+	// get user
+	user, err := models.GetUserByID(userID)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
 	// delete user
-	err = models.DeleteUser(userID)
+	err = models.DeleteUser(&user)
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 		return
