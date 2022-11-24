@@ -63,6 +63,18 @@ func UpdateUser(user *entities.User) error {
 	return err
 }
 
+func ChangeUserPassword(user *entities.User, password string) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	user.Password = helpers.EncryptPassword(password)
+	err = db.Save(user).Error
+	return err
+}
+
 func DeleteUser(user *entities.User) error {
 	// connect to database
 	db, err := db.GetConnection()
