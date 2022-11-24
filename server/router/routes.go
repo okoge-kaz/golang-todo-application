@@ -27,16 +27,15 @@ func Init() *gin.Engine {
 	})
 
 	// task
-	router.GET("/task", controllers.NotImplemented)
+	router.GET("/task", controllers.ShowTasks)
 	task := router.Group("/task")
 	// taskGroup.Use(service.LoginCheck) // login check
 	{
 		// create
-		task.GET("/new", controllers.NotImplemented)
-		task.POST("/new", controllers.NotImplemented)
+		task.POST("/new", controllers.CreateTask)
 
 		// read
-		task.GET("/:id", controllers.NotImplemented)
+		task.GET("/:id", controllers.ShowTask)
 
 		// update
 		taskUpdate := task.Group("/:id/")
