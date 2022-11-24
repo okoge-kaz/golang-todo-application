@@ -24,8 +24,8 @@ func GetUserID(ctx *gin.Context) int {
 	return userID.(int)
 }
 
-func SetUserID(ctx *gin.Context, userID int) error {
-	sessions.Default(ctx).Set(sessionKey, userID)
+func SetUserID(ctx *gin.Context, userID uint) error {
+	sessions.Default(ctx).Set(sessionKey, int(userID))
 	err := sessions.Default(ctx).Save()
 
 	if err != nil {
