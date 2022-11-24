@@ -57,7 +57,7 @@ func Init() *gin.Engine {
 		user.GET("/info", controllers.ShowUser)
 
 		// change password
-		user.POST("/change_password", controllers.NotImplemented)
+		user.POST("/change_password", controllers.ChangeUserPassword)
 
 		// change user name
 		user.POST("/change_name", controllers.NotImplemented)
