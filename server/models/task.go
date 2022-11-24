@@ -37,10 +37,33 @@ func GetTasksByUserID(userID int, order string) ([]entities.Task, error) {
 	}
 }
 
-func GetAllTasks(db *gorm.DB) ([]entities.Task, error) {
+func GetTasksByUserIDAndStatusAndKeyword(userID int, status []string, keywords []string, order string) ([]entities.Task, error) {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return nil, err
+	}
+
 	var tasks []entities.Task
-	err := db.Find(&tasks).Error
-	return tasks, err
+
+	keywordsQuery := ""
+	for i, keyword := range keywords {
+		if i == 0 {
+			keywordsQuery += "(title LIKE '%" + keyword + "%'"
+		} else {
+			keywordsQuery += " OR title LIKE '%" + keyword + "%'"
+		}
+	}
+	keywordsQuery += ")"
+
+	switch order {
+	case "desc":
+		err := db.Joins("JOIN ownerships ON ownerships.task_id = tasks.id").Where("ownerships.user_id = ? AND status IN (?) AND "+keywordsQuery, userID, status).Order("deadline desc").Find(&tasks).Error
+		return tasks, err
+	default:
+		err := db.Joins("JOIN ownerships ON ownerships.task_id = tasks.id").Where("ownerships.user_id = ? AND status IN (?) AND "+keywordsQuery, userID, status).Order("deadline asc").Find(&tasks).Error
+		return tasks, err
+	}
 }
 
 func CreateTask(db *gorm.DB, task *entities.Task) error {
