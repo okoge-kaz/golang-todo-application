@@ -3,7 +3,6 @@ package models
 import (
 	"github.com/okoge-kaz/golang-todo-application/server/db"
 	"github.com/okoge-kaz/golang-todo-application/server/entities"
-	"gorm.io/gorm"
 )
 
 func GetTask(taskID int) (entities.Task, error) {
@@ -74,20 +73,39 @@ func CreateTask(task *entities.Task) error {
 	}
 
 	err = db.Create(task).Error
+	// INSERT INTO tasks (title, description, deadline, status) VALUES (task.Title, task.Description, task.Deadline, task.Status)
 	return err
 }
 
-func UpdateTask(db *gorm.DB, task *entities.Task) error {
-	err := db.Save(task).Error
+func UpdateTask(task entities.Task, updateTask entities.Task) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Model(&task).Updates(updateTask).Error // UPDATE tasks SET title = updateTask.Title, description = updateTask.Description, deadline = updateTask.Deadline, status = updateTask.Status WHERE id = task.ID
 	return err
 }
 
-func DeleteTask(db *gorm.DB, id int) error {
-	err := db.Delete(&entities.Task{}, id).Error
+func DeleteTask(taskID int) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Delete(&entities.Task{}, taskID).Error // DELETE FROM tasks WHERE id = taskID
 	return err
 }
 
-func DeleteTasks(db *gorm.DB, ids []int) error {
-	err := db.Delete(&entities.Task{}, ids).Error
+func DeleteTasks(ids []int) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	err = db.Delete(&entities.Task{}, ids).Error // DELETE FROM tasks WHERE id IN (ids)
 	return err
 }
