@@ -19,24 +19,32 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	// create user
-	err = models.CreateUser(&user)
-	if err != nil {
-		ctx.String(http.StatusInternalServerError, "Internal Server Error")
+	// check duplicate user name
+	switch models.CheckDuplicateUserName(user.Name) {
+	case true: // duplicate
+		ctx.String(http.StatusConflict, "Conflict (duplicate user name)")
+		// TODO: フロントエンド側で status code 409 に対応した処理を実装すること
 		return
-	}
+	default: // not duplicate
+		// create user
+		err = models.CreateUser(&user)
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, "Internal Server Error")
+			return
+		}
 
-	// set session
-	err = helpers.SetUserID(ctx, user.ID)
-	if err != nil {
-		ctx.String(http.StatusInternalServerError, "Internal Server Error")
-		return
-	}
+		// set session
+		err = helpers.SetUserID(ctx, user.ID)
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, "Internal Server Error")
+			return
+		}
 
-	// render
-	ctx.JSON(http.StatusCreated, gin.H{
-		"user": user,
-	})
+		// render
+		ctx.JSON(http.StatusCreated, gin.H{
+			"user": user,
+		})
+	}
 }
 
 func ShowUser(ctx *gin.Context) {
