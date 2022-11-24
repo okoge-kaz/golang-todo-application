@@ -104,15 +104,14 @@ func ChangeUserName(ctx *gin.Context) {
 		return
 	}
 
-	var user entities.User
-	err = ctx.BindJSON(&user)
-	if err != nil {
-		ctx.String(http.StatusBadRequest, "Bad Request (invalid user)")
-		return
-	}
+	// get user
+	user, err := models.GetUserByID(userID)
+
+	// get new user name
+	newUserName := ctx.PostForm("new_user_name")
 
 	// change name
-	err = models.ChangeUserName(userID, user.Name)
+	err = models.ChangeUserName(&user, newUserName)
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 		return
