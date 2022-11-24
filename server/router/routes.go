@@ -60,7 +60,7 @@ func Init() *gin.Engine {
 		user.POST("/change_password", controllers.ChangeUserPassword)
 
 		// change user name
-		user.POST("/change_name", controllers.NotImplemented)
+		user.POST("/change_name", controllers.ChangeUserName)
 
 		// delete
 		user.POST("/delete", controllers.NotImplemented)
