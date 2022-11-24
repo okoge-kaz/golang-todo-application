@@ -113,3 +113,62 @@ func CreateTask(ctx *gin.Context) {
 		"task": task,
 	})
 }
+
+func UpdateTask(ctx *gin.Context) {
+	// get task
+	taskID, err := strconv.Atoi(ctx.Param("task_id"))
+	if err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request (invalid task id)")
+		return
+	}
+
+	task, err := models.GetTask(taskID)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
+	// bind request body
+	var updateTask entities.Task
+	if err := ctx.BindJSON(&updateTask); err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request (invalid request body)")
+		return
+	}
+
+	// update task record
+	if err := models.UpdateTask(task, updateTask); err != nil {
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	// render
+	ctx.JSON(http.StatusOK, gin.H{
+		"task": task,
+	})
+}
+
+func DeleteTask(ctx *gin.Context) {
+	// get task
+	taskID, err := strconv.Atoi(ctx.Param("task_id"))
+	if err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request (invalid task id)")
+		return
+	}
+
+	task, err := models.GetTask(taskID)
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
+	// delete task record
+	if err := models.DeleteTask(int(task.ID)); err != nil {
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	// render
+	ctx.JSON(http.StatusOK, gin.H{
+		"task": task,
+	})
+}
