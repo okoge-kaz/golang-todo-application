@@ -53,6 +53,20 @@ func CreateUser(user *entities.User) error {
 	return err
 }
 
+func CheckDuplicateUserName(userName string) bool {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return false
+	}
+
+	var count int64
+	db.Model(&entities.User{}).Where("user_name = ?", userName).Count(&count)
+	// SELECT count(*) FROM users WHERE user_name = 'userName';
+	return count > 0
+	// return true if user name is already taken
+}
+
 func UpdateUser(user *entities.User) error {
 	// connect to database
 	db, err := db.GetConnection()
