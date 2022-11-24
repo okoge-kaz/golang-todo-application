@@ -90,6 +90,18 @@ func ChangeUserPassword(user *entities.User, password string) error {
 	return err
 }
 
+func ChangeUserName(user *entities.User, userName string) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	user.Name = userName
+	err = db.Save(user).Error
+	return err
+}
+
 func DeleteUser(user *entities.User) error {
 	// connect to database
 	db, err := db.GetConnection()
