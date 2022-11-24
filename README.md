@@ -6,13 +6,42 @@
 
 ### Docker
 
-開発環境なためDockerイメージのサイズなどは考えず、binaryファイルだけをコピーする形としていない。
+開発環境なため Docker イメージのサイズなどは考えず、binary ファイルだけをコピーする形としていない。
 
-またホットリロードがされるように、Airを導入している。しかし、Production環境には適さないため、デプロイ前に修正する必要あり
+またホットリロードがされるように、Air を導入している。しかし、Production 環境には適さないため、デプロイ前に修正する必要あり
 
-## Development
+## How to setup
 
-## Deployment
+`docker-compose up -d`を行うだけでよい。
+
+詳細説明
+
+- フロントエンド
+
+  http://localhost:3000 にアクセスすると、root にアクセスできる。
+
+  Chrome 拡張機能 React Developer Tools をインストールすると、React のコンポーネントを確認することができる。
+
+- バックエンド
+
+  http://localhost:8000 にアクセスすると、root にアクセスできる。
+  基本的には、フロントエンドからのリクエストに対して、レスポンスを返すだけの役割を持つ。
+
+  講義で扱ったような、HTML を返すような処理は行わない。（純粋な REST API として振る舞う）
+
+- データベース
+
+  phpMyAdmin は導入していない。代わりに Table Plus でのアクセス方法を記す
+
+  - Name: 好きな名前(例: todo-application)
+  - Host: 0.0.0.0
+  - Port: 3306
+  - User: developer
+  - Password: password
+
+  以下のようなになっていれば、接続できる。
+
+  ![image](public/table-plus.png)
 
 ## Directory Structure
 
