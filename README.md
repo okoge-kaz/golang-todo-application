@@ -147,6 +147,8 @@ macOS 13.0.1 (arm64)
 ### Go + Air
 
 - Docker コンテナで golang をホットリロードする Air を導入: https://zenn.dev/ajapa/articles/bc399c7e4c0def
+- Go + echo + Air + Docker: https://qiita.com/345dvl/items/1dd12e19f10de034e0f5#docker%E3%81%AE%E5%B0%8E%E5%85%A5
+- Go + gin + air: https://zenn.dev/hrs/articles/go-gin-air-docker#.air.toml%E3%81%AE%E7%94%9F%E6%88%90
 
 ### wait for DB start
 
