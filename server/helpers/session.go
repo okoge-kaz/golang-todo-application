@@ -18,7 +18,7 @@ func SetSession(engine *gin.Engine) {
 func GetUserID(ctx *gin.Context) int {
 	userID := sessions.Default(ctx).Get(sessionKey)
 	if userID == nil {
-		ctx.AbortWithStatus(http.StatusUnauthorized)
+		ctx.Redirect(http.StatusFound, "http://localhost:3000/login")
 		return -1 // not logged in
 	}
 	return userID.(int)
