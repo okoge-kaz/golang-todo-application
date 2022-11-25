@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./docker/development/server/Dockerfile
     volumes:
-      - ./server:/server
+      - ./server:/app/server
     ports:
       - "8000:8000"
     tty: true
@@ -34,7 +34,7 @@ services:
       context: .
       dockerfile: ./docker/development/web/Dockerfile
     volumes:
-      - ./web:/web
+      - ./web:/app/web
     ports:
       - "3000:3000"
     tty: true
