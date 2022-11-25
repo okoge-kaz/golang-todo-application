@@ -12,8 +12,8 @@ type Task struct {
 	Deadline    time.Time // tasks.deadline
 	Status      string    // tasks.status
 	Description string    // tasks.description
-	IsDone      bool      // tasks.is_done
-	CategoryID  Category  `gorm:"foreignKey:CategoryID"` // tasks.category_id
+	IsDone      bool      `gprm:"notNull:IsDone"`        // tasks.is_done // TODO Not NULL Constraint
+	CategoryID  Category  `gorm:"foreignKey:CategoryID"` // tasks.category_id (has one)
 }
 
 type User struct {
@@ -24,11 +24,14 @@ type User struct {
 
 type Ownership struct {
 	gorm.Model
-	UserID User `gorm:"foreignKey:UserID"` // ownerships.user_id // belongs to user (many to one) (many ownerships can belong to one user)
-	TaskID Task `gorm:"foreignKey:TaskID"` // ownerships.task_id // has one task (one to one) (one ownership has one task)
+	UserID int
+	User   User `gorm:"foreignKey:UserID"`
+	TaskID int
+	Task   Task `gorm:"foreignKey:TaskID"`
 }
 
 type Category struct {
 	gorm.Model
-	Name string // categories.name
+	Name  string // categories.name
+	Color string // categories.color
 }
