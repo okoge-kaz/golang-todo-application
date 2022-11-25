@@ -77,6 +77,39 @@ func CreateTask(task *entities.Task) error {
 	return err
 }
 
+// Transaction
+func CreateTaskWithTransaction(task *entities.Task, user entities.User) error {
+	// connect to database
+	db, err := db.GetConnection()
+	if err != nil {
+		return err
+	}
+
+	// start transaction
+	tx := db.Begin()
+	err = tx.Create(task).Error
+	// INSERT INTO tasks (title, description, deadline, status) VALUES (task.Title, task.Description, task.Deadline, task.Status)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	ownership := entities.Ownership{
+		UserID: int(user.ID),
+		TaskID: int(task.ID),
+	}
+	err = tx.Create(&ownership).Error
+	// INSERT INTO ownerships (user_id, task_id) VALUES (user.ID, task.ID)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	// commit transaction
+	tx.Commit()
+	return nil
+}
+
 func UpdateTask(task entities.Task, updateTask entities.Task) error {
 	// connect to database
 	db, err := db.GetConnection()

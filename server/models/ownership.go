@@ -26,8 +26,8 @@ func CreateOwnership(user entities.User, task entities.Task) error {
 	}
 
 	ownership := entities.Ownership{
-		UserID: user,
-		TaskID: task,
+		UserID: int(user.ID),
+		TaskID: int(task.ID),
 	}
 
 	err = db.Create(&ownership).Error

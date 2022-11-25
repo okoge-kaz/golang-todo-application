@@ -95,13 +95,8 @@ func CreateTask(ctx *gin.Context) {
 		return
 	}
 
-	// create task record
-	if err := models.CreateTask(&task); err != nil {
-		ctx.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-	// create ownership record
-	if err := models.CreateOwnership(user, task); err != nil {
+	// create task record and ownership record
+	if err = models.CreateTaskWithTransaction(&task, user); err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
