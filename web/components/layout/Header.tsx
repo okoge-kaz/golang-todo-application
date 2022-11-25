@@ -1,13 +1,20 @@
+import Link from 'next/link'
+import styles from './style.module.scss'
+
 const Header = () => {
   return (
     <header>
-      <div className='bg-sky-500 flex'>
-        <div className='flex-auto'>
-          Sign Up
-        </div>
-        <div className='flex-auto'>
-          Sign In
-        </div>
+      <div className={styles.header_bar}>
+        <button className={styles.button}>
+          <Link href="/user/new">
+            Sign Up
+          </Link>
+        </button>
+        <button className={styles.button}>
+          <Link href="/login">
+            Sign In
+          </Link>
+        </button>
       </div>
     </header>
   )
