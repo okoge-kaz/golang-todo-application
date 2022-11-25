@@ -39,6 +39,9 @@ func Init(host, port, user, password, dbName string) error {
 	// bind database connection
 	_db = conn
 
+	// create tables (if not exists)
+	createTables(_db)
+
 	// auto migration
 	autoMigrate(_db)
 
@@ -60,4 +63,20 @@ func autoMigrate(_db *gorm.DB) {
 	_db.AutoMigrate(&entities.User{})
 	_db.AutoMigrate(&entities.Ownership{})
 	_db.AutoMigrate(&entities.Category{})
+}
+
+// create tables
+func createTables(_db *gorm.DB) {
+	if !_db.Migrator().HasTable(&entities.Task{}) {
+		_db.Migrator().CreateTable(&entities.Task{})
+	}
+	if !_db.Migrator().HasTable(&entities.User{}) {
+		_db.Migrator().CreateTable(&entities.User{})
+	}
+	if !_db.Migrator().HasTable(&entities.Ownership{}) {
+		_db.Migrator().CreateTable(&entities.Ownership{})
+	}
+	if !_db.Migrator().HasTable(&entities.Category{}) {
+		_db.Migrator().CreateTable(&entities.Category{})
+	}
 }
