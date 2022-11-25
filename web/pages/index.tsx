@@ -34,7 +34,7 @@ const Home = () => {
               </div>
             </Link>
 
-            <Link href="/task">
+            <Link href="/category">
               <div className={styles.card}>
                 <h3>Categories &rarr;</h3>
                 <p>You can view all categories.</p>
