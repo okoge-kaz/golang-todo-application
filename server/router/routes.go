@@ -82,5 +82,8 @@ func Init() *gin.Engine {
 	router.POST("/login", controllers.NotImplemented)
 	router.POST("/logout", controllers.NotImplemented)
 
+	// login check
+	router.GET("/login_check", controllers.NotImplemented)
+
 	return router
 }
