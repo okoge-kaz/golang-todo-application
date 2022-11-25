@@ -1,4 +1,4 @@
-export interface Task {
+export default interface Task {
   id: number
   title: string
   deadline: Date
