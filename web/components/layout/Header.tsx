@@ -5,6 +5,11 @@ const Header = () => {
   return (
     <header>
       <div className={styles.header_bar}>
+        <button className={styles.home_button}>
+          <Link href="/">
+            Home
+          </Link>
+        </button>
         <button className={styles.button}>
           <Link href="/user/new">
             Sign Up
