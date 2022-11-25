@@ -23,7 +23,7 @@ const Home = () => {
           <div className={styles.description}>
             <p>Tokyo Institute of Technology B3 (2022 3Q)</p>
             <p>Workshop on System Design</p>
-            <p>Todo Application (Backend: Go Gin, Forntend: Typescript Next.js)</p>
+            <p>Todo Application (Backend: Go Gin, Frontend: Typescript Next.js)</p>
           </div>
 
           <div className={styles.grid}>
